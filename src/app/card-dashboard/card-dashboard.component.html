@@ -1,0 +1,154 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Visting Card Dashboard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>      
+      <div class="d-flex">        
+        <button class="btn btn-success" type="submit"  data-bs-toggle="modal" data-bs-target="#exampleModal">Add Card Holder</button>
+      </div>
+    </div>
+</nav>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Card Holder Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form class="row g-3" [formGroup]="formValue">
+              <div class="col-md-6">
+                  <label for="inputName" class="form-label">Card Holder Name</label>
+                  <input type="text" formControlName="name" class="form-control" id="inputName">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputClass" class="form-label">Position</label>
+                  <input type="text" formControlName="position" class="form-control" id="inputClass">
+                </div>
+              <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Contact Number</label>
+                <input type="email" formControlName="contact" class="form-control" id="inputEmail4">
+              </div>
+              <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Email Id</label>
+                <input type="email" formControlName="email" class="form-control" id="inputPassword4">
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" formControlName="address" id="inputAddress" placeholder="1234 Main St">
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning"  data-bs-dismiss="modal">Close</button>
+        <button *ngIf="btnSaveShow" type="button" class="btn btn-primary" (click)="AddCard()">Register</button>
+        <button *ngIf="btnUpdateShow" type="button" class="btn btn-primary" (click)="UpdateCard()" >Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Print caard -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog card-wrapper body">
+    <div class="modal-content">
+      <div class="modal-header card-wrapper body">
+        <h5 class="modal-title" id="exampleModalLabel">Card Holder Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+
+      <div class="card-wrapper body" >
+        <title>Business/Visiting Card</title>
+      <div class="modal-body ">
+        <form class="row g-3" [formGroup]="formValue">
+          <div class="card col-md-6 ">
+            <div class="card-front" >
+              <div class="left">
+                <img src="../../assets/logo.png" />
+              </div>
+        
+              <div class="right">
+                <div class="person right-content">
+                 <i class='bx bxs-user bx-burst-hover'></i>
+                  <div>
+                    <h4>{{formValue.value.name}}</h4>
+                    <p>{{formValue.value.position}}</p>
+                  </div>
+                </div>
+        
+                <div class="phone right-content">
+                  <i class='bx bxs-phone bx-burst-hover'></i>
+        
+                  <div>
+                    <p>{{formValue.value.contact}}</p>
+                  </div>
+                </div>
+        
+                <div class="email right-content">
+                  <i class='bx bxs-envelope bx-burst-hover'></i>
+                  <div>
+                    <p>{{formValue.value.email}}</p>
+                  </div>
+                </div>
+        
+                <div class="address right-content">
+                  <i class='bx bxs-map bx-burst-hover'></i>
+        
+                  <div>
+                    <p>{{formValue.value.address}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="card-back">
+              <img src="../../assets/logo.png" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning"  data-bs-dismiss="modal">Close</button>
+        <button  type="button" class="btn btn-primary" ngxPrint printSectionId="print-section"  >Print</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<table class="table table-dark table-hover">
+  <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Contact</th>
+        <th>Email Id</th>
+        <th>Address</th>
+        <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let card of allcard">
+        <td>{{card.id}}</td>
+        <td>{{card.name}}</td>
+        <td>{{card.position}}</td>
+        <td>{{card.contact}}</td>
+        <td>{{card.email}}</td>
+        <td>{{card.address}}</td>
+        <td>
+            <input type="button" value="Edit" (click)="EditCard(card)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success me-2"/>
+            <input type="button" value="Delete" (click)="DeleteCard(card)" class="btn btn-danger me-2"/>
+            <input type="button" value="Print" (click)="PrintCard(card)" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="btn btn-info me-2"/>
+           
+        </td>
+    </tr>
+  </tbody>
+  </table>
+
